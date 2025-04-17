@@ -1,0 +1,28 @@
+services:
+  two-tier-flask-app:
+    image: flask_image:latest
+    build:
+      context: ./two-tier-flask-app
+    container_name: flask_cont
+    environment:
+      - MYSQL_HOST:sql_cont
+      - MYSQL_USER:external_user
+      - MYSQL_PASSWORD:password
+      - MYSQL_DB:my_database
+    ports:
+      - 5000:5000  
+  sql:
+    image: sql_image:latest
+    build:
+      context: ./sql
+    container_name: sql_cont
+    environment: 
+      - MYSQL_USER:external_user
+      - MYSQL_PASSWORD:password
+      - MYSQL_DATABASE:my_database
+      - MYSQL_ROOT_PASSWORD:root 
+    ports:
+      - 3060:3060
+
+ 
+
